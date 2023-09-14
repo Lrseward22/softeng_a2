@@ -1,11 +1,12 @@
 class Entry():
-    def __init__(self):
-        self.entry_name
-        self._path
+    def __init__(self, entry_name: str):
+        self.entry_name = entry_name
+        self.entry_path
         self.contents
         pass
 
     def create_file(self):
+        open(self.entry_path, "x")
         pass
 
     # used by programmer
