@@ -5,7 +5,7 @@ from entry import Entry
 class Diary:
 
     def __init__(self, **kwargs) -> None:
-        DIARIES_PATH = os.getcwd() + "/../diaries"
+        DIARIES_PATH = os.getcwd() + "/diaries"
         if not os.path.exists(DIARIES_PATH):
             os.mkdir(DIARIES_PATH)
 
@@ -13,23 +13,25 @@ class Diary:
             self._owner = kwargs["owner"] 
         else:
             self._owner = input("Enter the name of the owner of this diary: ")
-        self._dairy_path = DIARIES_PATH + f"/{self._owner/"
+        self._diary_path = DIARIES_PATH + f"/{self._owner}/"
 
         if not os.path.exists(self._diary_path):
             os.mkdir(self._diary_path)
             self._entries = {}
         else:
             # raise an error (THIS DIARY ALREADY EXISTS)
-            print(f"diary: {self.owner} already exists")
+            print(f"diary: {self._owner} already exists")
 
 
     def write_entry(self):
         # make everything input
         entry_name: str = input("Name is this entry: ")
+        entry_name.replace(" ", "_")
         if entry_name not in self._entries.keys():
             # make new entry
             contents: str = input("Write the contents of this entry:\n")
             filename = self._diary_path + entry_name + ".txt"
+            self._entries[entry_name] = filename
 
             with open(filename, "w") as file: 
                 file.write(contents)
@@ -42,11 +44,11 @@ class Diary:
     def read_entry(self):
         # entry_name to read
         entry_name: str = input("Name of entry to read: ")
+        entry_name.replace(" ", "_")
         if entry_name in self._entries.keys():
-            filename = self._diary_path + entry_name + ".txt"
-
-        with open(filename, "r") as file: 
-            print(f"{entry_name}:\n{file.read()}")
+            filename = self._diaries[entry_name]
+            with open(filename, "r") as file: 
+                print(f"{entry_name}:\n{file.read()}")
 
         else:
             print(f"Error: {entry_name} does not exist.")
@@ -54,8 +56,9 @@ class Diary:
 
     def delete_entry(self):
         entry_name: str = input("Name of entry to delete: ")
+        entry_name.replace(" ", "_")
         if entry_name in self._entries.keys():
-            filename = self._diary_path + entry_name + ".txt"
+            filename = self._diaries[entry_name]
 
             # prompt to delete
 
@@ -68,6 +71,5 @@ class Diary:
 
 
     def list_entries(self):
-        entries = os.listdir(self._diary_path)
-        entries = [entry.replace(".txt", "") for entry in entries]
+        entries = list(self._entries.keys())
         print(entries)
