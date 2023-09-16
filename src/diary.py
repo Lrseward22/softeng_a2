@@ -63,6 +63,7 @@ class Diary:
         if entry_name in self._entries.keys():
             filename = self._entries[entry_name]
 
+            # get user confirmation on deletion
             while True:
                 confirm = input(f"Confirm deletion: (y/n)").lower()
                 if confirm == "y":
