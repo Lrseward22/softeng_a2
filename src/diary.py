@@ -1,6 +1,4 @@
 import os
-from entry import Entry
-
 
 class Diary:
 
@@ -46,7 +44,7 @@ class Diary:
         entry_name: str = input("Name of entry to read: ")
         entry_name.replace(" ", "_")
         if entry_name in self._entries.keys():
-            filename = self._diaries[entry_name]
+            filename = self._entries[entry_name]
             with open(filename, "r") as file: 
                 print(f"{entry_name}:\n{file.read()}")
 
@@ -58,7 +56,7 @@ class Diary:
         entry_name: str = input("Name of entry to delete: ")
         entry_name.replace(" ", "_")
         if entry_name in self._entries.keys():
-            filename = self._diaries[entry_name]
+            filename = self._entries[entry_name]
 
             # prompt to delete
 

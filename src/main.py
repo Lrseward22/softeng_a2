@@ -16,6 +16,6 @@ if __name__ == "__main__":
     print("Read ENTRIES")
     d1.read_entry()
 
-    #print("After DELETE ENTRIES")
-    #d1.delete_entry()
-    #d1.list_entries()
+    print("After DELETE ENTRIES")
+    d1.delete_entry()
+    d1.list_entries()
