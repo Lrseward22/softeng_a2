@@ -1,6 +1,13 @@
 import os
-from entry import Entry
 
+class DiaryExistsException(Exception):
+    pass
+
+class EntryExistsException(Exception):
+    pass
+
+class NoEntryException(Exception):
+    pass
 
 class Diary:
 
@@ -19,8 +26,7 @@ class Diary:
             os.mkdir(self._diary_path)
             self._entries = {}
         else:
-            # raise an error (THIS DIARY ALREADY EXISTS)
-            print(f"diary: {self._owner} already exists")
+            raise DiaryExistsException(f"diary: {self._owner} already exists")
 
 
     def write_entry(self):
@@ -36,9 +42,8 @@ class Diary:
             with open(filename, "w") as file: 
                 file.write(contents)
 
-        else: 
-            # raise error: (THIS ENTRY NAME ALREADY EXISTS)
-            print(f"Error: {entry_name} already exists.")
+        else:
+            raise EntryExistsException(f"{entry_name} already exists.")
 
 
     def read_entry(self):
@@ -46,19 +51,19 @@ class Diary:
         entry_name: str = input("Name of entry to read: ")
         entry_name.replace(" ", "_")
         if entry_name in self._entries.keys():
-            filename = self._diaries[entry_name]
+            filename = self._entries[entry_name]
             with open(filename, "r") as file: 
                 print(f"{entry_name}:\n{file.read()}")
 
         else:
-            print(f"Error: {entry_name} does not exist.")
+            raise NoEntryException(f"{entry_name} does not exist.")
 
 
     def delete_entry(self):
         entry_name: str = input("Name of entry to delete: ")
         entry_name.replace(" ", "_")
         if entry_name in self._entries.keys():
-            filename = self._diaries[entry_name]
+            filename = self._entries[entry_name]
 
             # prompt to delete
 
@@ -67,7 +72,7 @@ class Diary:
             del self._entries[entry_name]
 
         else:
-            print(f"Error: {entry_name} does not exist.")
+            raise NoEntryException(f"{entry_name} does not exist.")
 
 
     def list_entries(self):
