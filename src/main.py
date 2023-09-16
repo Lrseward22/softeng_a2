@@ -2,8 +2,7 @@ from diary import Diary
 
 if __name__ == "__main__":
 
-    print("You are messing with Jed's diary")
-    d1 = Diary(owner="Jed")
+    d1 = Diary()
 
     print("Before ENTRIES")
     d1.list_entries()
